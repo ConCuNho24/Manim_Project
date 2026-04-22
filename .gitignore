@@ -1,0 +1,14 @@
+# Ignore all media folders in all subprojects
+media/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual env
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
