@@ -36,6 +36,7 @@ def line_intersection(P1, P2, Q1, Q2):
 
     return np.array([px, py, 0])
 
+
 def circumcenter(A, B, C):
     x1, y1 = A[:2]
     x2, y2 = B[:2]
@@ -63,23 +64,26 @@ def circumcenter(A, B, C):
 
 class HinhAmsProject(Scene):
     def construct(self):
-
         # =============================
-        # SCALE FACTOR + DỊCH HÌNH
+        # THIẾT LẬP CHUNG
         # =============================
         scale_factor = 0.7
         shift_vec = UP * 0.2
 
+        main_stroke = 2
+        thin_stroke = 1.6
+        circle_stroke = 1.6
+
         # =============================
         # TAM GIÁC ABC
         # =============================
-        A_pos = np.array([-1.25, 1.8, 0]) * scale_factor + shift_vec
+        A_pos = np.array([-1.3, 1.8, 0]) * scale_factor + shift_vec
         B_pos = np.array([-2.0, -2.0, 0]) * scale_factor + shift_vec
         C_pos = np.array([2.5, -2.0, 0]) * scale_factor + shift_vec
 
-        A = Dot(A_pos, color=BLUE)
-        B = Dot(B_pos, color=BLUE)
-        C = Dot(C_pos, color=BLUE)
+        A = Dot(A_pos, color=BLUE, radius=0.05)
+        B = Dot(B_pos, color=BLUE, radius=0.05)
+        C = Dot(C_pos, color=BLUE, radius=0.05)
 
         labelA = MathTex("A", font_size=20).next_to(A, UP, buff=0.1)
         labelB = MathTex("B", font_size=20).next_to(B, DOWN, buff=0.1)
@@ -89,7 +93,8 @@ class HinhAmsProject(Scene):
             A_pos,
             B_pos,
             C_pos,
-            color=BLUE
+            color=BLUE,
+            stroke_width=main_stroke
         )
 
         self.play(Create(triangle))
@@ -106,7 +111,7 @@ class HinhAmsProject(Scene):
         # =============================
         # VẼ ĐƯỜNG CAO AD
         # =============================
-        AD_line = Line(A_pos, D_pos, color=ORANGE)
+        AD_line = Line(A_pos, D_pos, color=ORANGE, stroke_width=thin_stroke)
         D = Dot(D_pos, color=WHITE, radius=0.04)
         labelD = MathTex("D", font_size=16).next_to(D, DOWN, buff=0.1)
 
@@ -117,7 +122,7 @@ class HinhAmsProject(Scene):
         # =============================
         # VẼ ĐƯỜNG CAO BE
         # =============================
-        BE_line = Line(B_pos, E_pos, color=GREEN)
+        BE_line = Line(B_pos, E_pos, color=GREEN, stroke_width=thin_stroke)
         E = Dot(E_pos, color=GREEN, radius=0.04)
         labelE = MathTex("E", font_size=16).next_to(E, RIGHT, buff=0.1)
 
@@ -128,7 +133,7 @@ class HinhAmsProject(Scene):
         # =============================
         # VẼ ĐƯỜNG CAO CF
         # =============================
-        CF_line = Line(C_pos, F_pos, color=RED)
+        CF_line = Line(C_pos, F_pos, color=RED, stroke_width=thin_stroke)
         F = Dot(F_pos, color=RED, radius=0.04)
         labelF = MathTex("F", font_size=16).next_to(F, LEFT, buff=0.1)
 
@@ -141,7 +146,7 @@ class HinhAmsProject(Scene):
         # =============================
         H_pos = line_intersection(A_pos, D_pos, B_pos, E_pos)
 
-        H = Dot(H_pos, color=YELLOW)
+        H = Dot(H_pos, color=YELLOW, radius=0.05)
         labelH = MathTex("H", font_size=20).next_to(H, DOWN + RIGHT, buff=0.1)
 
         self.play(FadeIn(H), FadeIn(labelH))
@@ -153,22 +158,25 @@ class HinhAmsProject(Scene):
         right_angle_D = RightAngle(
             Line(D_pos, A_pos),
             Line(D_pos, C_pos),
-            length=0.18,
-            color=WHITE
+            length=0.14,
+            color=WHITE,
+            stroke_width=1.4
         )
 
         right_angle_E = RightAngle(
             Line(E_pos, B_pos),
             Line(E_pos, C_pos),
-            length=0.18,
-            color=WHITE
+            length=0.14,
+            color=WHITE,
+            stroke_width=1.4
         )
 
         right_angle_F = RightAngle(
             Line(F_pos, C_pos),
             Line(F_pos, A_pos),
-            length=0.18,
-            color=WHITE
+            length=0.14,
+            color=WHITE,
+            stroke_width=1.4
         )
 
         self.play(Create(right_angle_D))
@@ -176,29 +184,30 @@ class HinhAmsProject(Scene):
         self.play(Create(right_angle_F))
         self.wait(0.6)
 
-                # =============================
-        # ĐƯỜNG TRÒN NGOẠI TIẾP TAM GIÁC ABC
+        # =============================
+        # ĐƯỜNG TRÒN NGOẠI TIẾP
         # =============================
         O_pos = circumcenter(A_pos, B_pos, C_pos)
         radius = np.linalg.norm(A_pos - O_pos)
 
-        circumcircle = Circle(radius=radius, color=WHITE).move_to(O_pos)
+        circumcircle = Circle(
+            radius=radius,
+            color=WHITE,
+            stroke_width=circle_stroke
+        ).move_to(O_pos)
 
         self.play(Create(circumcircle))
         self.wait(0.3)
 
         # =============================
         # QUA A KẺ ĐƯỜNG THẲNG SONG SONG BC
-        # CẮT ĐƯỜNG TRÒN TẠI K (PHÍA BÊN PHẢI)
+        # TỪ A QUA BÊN PHẢI CẮT ĐƯỜNG TRÒN TẠI K
         # =============================
-        # Vì BC nằm ngang nên đường qua A song song BC cũng nằm ngang: y = A_y
         yA = A_pos[1]
         dx = np.sqrt(max(radius**2 - (yA - O_pos[1])**2, 0))
+        K_pos = np.array([O_pos[0] + dx, yA, 0])
 
-        K_pos = np.array([O_pos[0] + dx, yA, 0])   # giao điểm bên phải
-        A_parallel_end = K_pos
-
-        AK_line = Line(A_pos, A_parallel_end, color=YELLOW)
+        AK_line = Line(A_pos, K_pos, color=YELLOW, stroke_width=thin_stroke)
         K = Dot(K_pos, color=YELLOW, radius=0.05)
         labelK = MathTex("K", font_size=18).next_to(K, RIGHT, buff=0.08)
 
@@ -218,7 +227,6 @@ class HinhAmsProject(Scene):
 
         # =============================
         # N ĐỐI XỨNG CỦA M QUA D
-        # => D là trung điểm của MN
         # =============================
         N_pos = 2 * D_pos - M_pos
         N = Dot(N_pos, color=PURPLE, radius=0.05)
@@ -228,11 +236,13 @@ class HinhAmsProject(Scene):
         self.wait(0.3)
 
         # =============================
-        # NỐI NB VÀ NA
+        # NỐI NB, NA, MK
         # =============================
-        NB_line = Line(N_pos, B_pos, color=PURPLE)
-        NA_line = Line(N_pos, A_pos, color=PURPLE)
+        NB_line = Line(N_pos, B_pos, color=PURPLE, stroke_width=thin_stroke)
+        NA_line = Line(N_pos, A_pos, color=PURPLE, stroke_width=thin_stroke)
+        MK_line = Line(M_pos, K_pos, color=TEAL, stroke_width=thin_stroke)
 
         self.play(Create(NB_line))
         self.play(Create(NA_line))
-        self.wait(0.6)
+        self.play(Create(MK_line))
+        self.wait(0.8)
