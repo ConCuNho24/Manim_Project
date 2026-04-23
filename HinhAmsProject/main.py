@@ -144,9 +144,9 @@ class HinhAmsProject(Scene):
         B = Dot(B_pos, color=BLUE, radius=0.05)
         C = Dot(C_pos, color=BLUE, radius=0.05)
 
-        labelA = MathTex("A", font_size=20).next_to(A, UP, buff=0.1)
-        labelB = MathTex("B", font_size=20).next_to(B, DOWN, buff=0.1)
-        labelC = MathTex("C", font_size=20).next_to(C, RIGHT, buff=0.1)
+        labelA = MathTex("A", font_size=12).next_to(A, UP, buff=0.1)
+        labelB = MathTex("B", font_size=12).next_to(B, DOWN, buff=0.1)
+        labelC = MathTex("C", font_size=12).next_to(C, RIGHT, buff=0.1)
 
         triangle = Polygon(
             A_pos,
@@ -172,7 +172,7 @@ class HinhAmsProject(Scene):
         # =============================
         AD_line = Line(A_pos, D_pos, color=ORANGE, stroke_width=thin_stroke)
         D = Dot(D_pos, color=WHITE, radius=0.04)
-        labelD = MathTex("D", font_size=16).next_to(D, DOWN, buff=0.1)
+        labelD = MathTex("D", font_size=12).next_to(D, (DOWN + RIGHT) * 0.75, buff=0.1)
 
         self.play(Create(AD_line))
         self.play(FadeIn(D), FadeIn(labelD))
@@ -183,7 +183,7 @@ class HinhAmsProject(Scene):
         # =============================
         BE_line = Line(B_pos, E_pos, color=GREEN, stroke_width=thin_stroke)
         E = Dot(E_pos, color=GREEN, radius=0.04)
-        labelE = MathTex("E", font_size=16).next_to(E, RIGHT, buff=0.1)
+        labelE = MathTex("E", font_size=12).next_to(E, RIGHT, buff=0.1)
 
         self.play(Create(BE_line))
         self.play(FadeIn(E), FadeIn(labelE))
@@ -194,7 +194,7 @@ class HinhAmsProject(Scene):
         # =============================
         CF_line = Line(C_pos, F_pos, color=RED, stroke_width=thin_stroke)
         F = Dot(F_pos, color=RED, radius=0.04)
-        labelF = MathTex("F", font_size=16).next_to(F, UP, buff=0.1)
+        labelF = MathTex("F", font_size=12).next_to(F, UP*1.1, buff=0.1)
 
         self.play(Create(CF_line))
         self.play(FadeIn(F), FadeIn(labelF))
@@ -206,7 +206,7 @@ class HinhAmsProject(Scene):
         H_pos = line_intersection(A_pos, D_pos, B_pos, E_pos)
 
         H = Dot(H_pos, color=YELLOW, radius=0.05)
-        labelH = MathTex("H", font_size=20).next_to(H, DOWN + RIGHT, buff=0.1)
+        labelH = MathTex("H", font_size=12).next_to(H, DOWN + RIGHT, buff=0.1)
 
         self.play(FadeIn(H), FadeIn(labelH))
         self.wait(0.4)
@@ -268,7 +268,7 @@ class HinhAmsProject(Scene):
 
         AK_line = Line(A_pos, K_pos, color=YELLOW, stroke_width=thin_stroke)
         K = Dot(K_pos, color=YELLOW, radius=0.05)
-        labelK = MathTex("K", font_size=18).next_to(K, RIGHT, buff=0.08)
+        labelK = MathTex("K", font_size=12).next_to(K, RIGHT, buff=0.08)
 
         self.play(Create(AK_line))
         self.play(FadeIn(K), FadeIn(labelK))
@@ -279,7 +279,7 @@ class HinhAmsProject(Scene):
         # =============================
         M_pos = (B_pos + C_pos) / 2
         M = Dot(M_pos, color=TEAL, radius=0.05)
-        labelM = MathTex("M", font_size=18).next_to(M, DOWN, buff=0.08)
+        labelM = MathTex("M", font_size=12).next_to(M, DOWN, buff=0.08)
 
         self.play(FadeIn(M), FadeIn(labelM))
         self.wait(0.3)
@@ -289,7 +289,7 @@ class HinhAmsProject(Scene):
         # =============================
         N_pos = 2 * D_pos - M_pos
         N = Dot(N_pos, color=PURPLE, radius=0.05)
-        labelN = MathTex("N", font_size=18).next_to(N, DOWN + LEFT, buff=0.08)
+        labelN = MathTex("N", font_size=12).next_to(N, DOWN + LEFT, buff=0.08)
 
         self.play(FadeIn(N), FadeIn(labelN))
         self.wait(0.3)
@@ -329,7 +329,7 @@ class HinhAmsProject(Scene):
 
         AP_line = Line(A_pos, P_pos, color=ORANGE, stroke_width=thin_stroke)
         P = Dot(P_pos, color=ORANGE, radius=0.05)
-        labelP = MathTex("P", font_size=18).next_to(P, DOWN, buff=0.08)
+        labelP = MathTex("P", font_size=12).next_to(P, DOWN, buff=0.08)
 
         self.play(Transform(AD_line, AP_line))
         self.play(FadeIn(P), FadeIn(labelP))
@@ -346,7 +346,7 @@ class HinhAmsProject(Scene):
         # =============================
         I_pos = (E_pos + F_pos) / 2
         I = Dot(I_pos, color=TEAL, radius=0.05)
-        labelI = MathTex("I", font_size=18).next_to(I, DOWN, buff=0.08)
+        labelI = MathTex("I", font_size=12).next_to(I, UP + RIGHT * 0.1, buff=0.08)
 
         self.play(FadeIn(I), FadeIn(labelI))
         self.wait(0.3)
@@ -363,7 +363,7 @@ class HinhAmsProject(Scene):
         )
 
         J = Dot(J_pos, color=MAROON, radius=0.05)
-        labelJ = MathTex("J", font_size=18).next_to(J, UP, buff=0.08)
+        labelJ = MathTex("J", font_size=12).next_to(J, UP, buff=0.08)
 
         self.play(FadeIn(J), FadeIn(labelJ))
         self.wait(0.3)
@@ -430,6 +430,26 @@ class HinhAmsProject(Scene):
             FadeIn(tri_KBC)
         )
         self.wait(0.6)
+        # =============================
+        # NỐI AI
+        # =============================
+        AI_line = Line(A_pos, I_pos, color=TEAL, stroke_width=thin_stroke)
+        self.play(Create(AI_line))
+        self.wait(0.3)
+
+        # =============================
+        # HIGHLIGHT AI THEO KM
+        # =============================
+        highlight_color = TEAL
+
+        AI_highlight = Line(A_pos, I_pos, color=highlight_color, stroke_width=3)
+        KM_highlight = Line(K_pos, M_pos, color=highlight_color, stroke_width=3)
+
+        self.play(
+            Transform(AI_line, AI_highlight),
+            Transform(MK_line, KM_highlight),
+        )
+        self.wait(0.6)
 
         # =============================
         # NỐI PB VÀ PC
@@ -489,11 +509,32 @@ class HinhAmsProject(Scene):
         PM_highlight = Line(P_pos, M_pos, color=highlight_color, stroke_width=3)
         PN_highlight = Line(P_pos, N_pos, color=highlight_color, stroke_width=3)
 
+        # =============================
+        # TAM GIÁC PMN VÀ HIJ (MÀU TÍM)
+        # =============================
+        tri_PMN = Polygon(
+            P_pos, M_pos, N_pos,
+            color=highlight_color,
+            stroke_width=3,
+            fill_color=highlight_color,
+            fill_opacity=0.2
+        )
+
+        tri_HIJ = Polygon(
+            H_pos, I_pos, J_pos,
+            color=highlight_color,
+            stroke_width=3,
+            fill_color=highlight_color,
+            fill_opacity=0.2
+        )
+
         self.play(
             Transform(HI_line, HI_highlight),
             Transform(HJ_line, HJ_highlight),
             Transform(PM_line, PM_highlight),
             Transform(PN_line, PN_highlight),
+            FadeIn(tri_PMN),
+            FadeIn(tri_HIJ),
         )
         self.wait(0.8)
         # =============================
